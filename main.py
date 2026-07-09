@@ -58,7 +58,8 @@ import numpy as np
 import torch
 from torch.utils.data import DataLoader
 
-from akrm import AdaptiveKnowledgeReasoningModule, AKRMConfig
+from akrm.orchestrator import AdaptiveKnowledgeReasoningModule
+from akrm.diagnosis import AKRMConfig
 from augment import augment_samples
 from data import DATASET_META, get_dataloaders
 from evaluate import (
@@ -270,6 +271,7 @@ def run_single_seed(seed: int, args, class_names: list, device) -> tuple:
                 unc_results  = unc,
                 device       = device,
                 class_names  = class_names,
+                config       = AKRMConfig(policy_type=args.akrm_policy)
             )
             experience_pool = akrm.run(uncertain_indices)
             akrm.print_summary()
@@ -351,6 +353,7 @@ def main() -> None:
     parser.add_argument("--lr",             type=float, default=0.001,
                         help="Adam learning rate (same for training and retraining)")
     parser.add_argument("--batch_size",     type=int,   default=64)
+    parser.add_argument("--akrm_policy",    type=str,   default="heuristic", choices=["heuristic", "random"], help="Policy for AKRM v2 strategy selection")
     parser.add_argument("--seeds",          type=int,   nargs="+",
                         default=[42, 123, 999],
                         help="List of random seeds for the repeated experiment")
