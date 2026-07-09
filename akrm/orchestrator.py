@@ -181,4 +181,29 @@ class AdaptiveKnowledgeReasoningModule:
         os.makedirs(os.path.dirname(save_path) or ".", exist_ok=True)
         df = pd.DataFrame(self._reasoning_log)
         df.to_csv(save_path, index=False)
-        print(f"    AKRM v2: Reasoning report saved to {save_path}")
+        print(f"    AKRM v2: Reasoning report saved → {save_path}")
+
+    def save_diagnosis_validation(self, save_path: str):
+        """
+        Writes a plain-text diagnosis validation report summarising
+        the knowledge gap types and selected strategies for this run.
+        """
+        import os
+        from collections import Counter
+        if not self._reasoning_log:
+            return
+        os.makedirs(os.path.dirname(save_path) or ".", exist_ok=True)
+        gap_counts      = Counter(r["knowledge_gap"]      for r in self._reasoning_log)
+        strategy_counts = Counter(r["selected_provider"]  for r in self._reasoning_log)
+        total = len(self._reasoning_log)
+        with open(save_path, "w", encoding="utf-8") as fh:
+            fh.write("AKRM v2 — Diagnosis Validation Report\n")
+            fh.write("=" * 50 + "\n\n")
+            fh.write(f"Total uncertain samples analysed: {total:,}\n\n")
+            fh.write("Knowledge Gap Distribution:\n")
+            for gap, count in gap_counts.most_common():
+                fh.write(f"  {gap:<40} {count:>6,}  ({100*count/total:.1f}%)\n")
+            fh.write("\nSelected Provider Distribution:\n")
+            for strategy, count in strategy_counts.most_common():
+                fh.write(f"  {strategy:<40} {count:>6,}  ({100*count/total:.1f}%)\n")
+        print(f"    AKRM v2: Diagnosis validation report saved → {save_path}")
