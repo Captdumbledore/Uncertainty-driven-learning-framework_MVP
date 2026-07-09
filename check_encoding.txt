@@ -1,0 +1,8 @@
+﻿  WARN  main.py: lines [70, 72, 84, 86, 122, 124, 139, 140, 149, 165]
+  WARN  evaluate.py: lines [13, 49, 51, 88, 91, 93, 140, 220, 232, 234]
+  WARN  uncertainty.py: lines [14, 15, 17, 18, 38, 40, 70, 76, 94, 120]
+  WARN  retrain.py: lines [115, 133]
+  WARN  train.py: lines [58, 76, 91]
+  WARN  augment.py: lines [12, 13, 39, 77]
+  OK    data.py
+  WARN  model.py: lines [8, 9, 11, 12, 41, 42, 43, 44, 45]
