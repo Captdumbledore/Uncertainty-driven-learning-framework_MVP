@@ -94,6 +94,14 @@ class SimpleCNN(nn.Module):
         x = self.fc2(x)                        # → (B, num_classes)
         return x
 
+    def extract_features(self, x):
+        """Extracts the dense representation before the final classifier."""
+        x = self.pool(F.relu(self.conv1(x)))
+        x = self.pool(F.relu(self.conv2(x)))
+        x = x.view(x.size(0), -1)
+        x = F.relu(self.fc1(x)) # Note: No dropout during feature extraction
+        return x
+
 
 def enable_dropout(model: nn.Module) -> None:
     """
