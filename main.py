@@ -60,6 +60,11 @@ from torch.utils.data import DataLoader
 
 from akrm.orchestrator import AdaptiveKnowledgeReasoningModule
 from akrm.diagnosis import AKRMConfig
+from akrm.protocols.offline_retraining import OfflineRetraining
+from akrm.protocols.replay_buffer import ReplayBuffer
+from akrm.protocols.mixed_replay import MixedReplay
+from akrm.protocols.curriculum_replay import CurriculumReplay
+from akrm.protocols.knowledge_distillation import KnowledgeDistillation
 from augment import augment_samples
 from data import DATASET_META, get_dataloaders
 from evaluate import (
@@ -306,11 +311,30 @@ def run_single_seed(seed: int, args, class_names: list, device) -> tuple:
             pool_size   = len(pool_or_aug)
 
         print(f"\n    Retraining for {args.retrain_epochs} epochs...")
-        retrained, history = retrain_model(
-            model, train_dataset, pool_or_aug, val_loader,
-            epochs=args.retrain_epochs, lr=args.lr,
-            batch_size=args.batch_size, device=device,
-        )
+
+        if pipeline == "C":
+            # Route through the selected learning protocol
+            protocol_map = {
+                "offline":      OfflineRetraining,
+                "replay":       ReplayBuffer,
+                "mixed":        MixedReplay,
+                "curriculum":   CurriculumReplay,
+                "distillation": KnowledgeDistillation,
+            }
+            ProtocolClass = protocol_map[args.learning_protocol]
+            protocol = ProtocolClass(
+                epochs=args.retrain_epochs, lr=args.lr,
+                batch_size=args.batch_size, device=device,
+            )
+            retrained, history = protocol.update(
+                model, train_dataset, pool_or_aug, val_loader,
+            )
+        else:
+            retrained, history = retrain_model(
+                model, train_dataset, pool_or_aug, val_loader,
+                epochs=args.retrain_epochs, lr=args.lr,
+                batch_size=args.batch_size, device=device,
+            )
 
         print(f"\n    Evaluating Pipeline {pipeline} on test set...")
         res = evaluate_model(retrained, test_loader, device)
@@ -354,6 +378,9 @@ def main() -> None:
                         help="Adam learning rate (same for training and retraining)")
     parser.add_argument("--batch_size",     type=int,   default=64)
     parser.add_argument("--akrm_policy",    type=str,   default="heuristic", choices=["heuristic", "random"], help="Policy for AKRM v2 strategy selection")
+    parser.add_argument("--learning_protocol", type=str, default="offline",
+                        choices=["offline", "replay", "mixed", "curriculum", "distillation"],
+                        help="Learning protocol for Pipeline C (offline|replay|mixed|curriculum|distillation)")
     parser.add_argument("--seeds",          type=int,   nargs="+",
                         default=[42, 123, 999],
                         help="List of random seeds for the repeated experiment")
