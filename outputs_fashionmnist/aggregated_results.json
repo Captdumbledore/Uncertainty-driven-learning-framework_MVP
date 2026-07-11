@@ -1,0 +1,118 @@
+{
+  "dataset": "FashionMNIST",
+  "epochs": 15,
+  "retrain_epochs": 8,
+  "mc_samples": 30,
+  "top_fraction": 0.1,
+  "seeds": [
+    42,
+    123,
+    999
+  ],
+  "summary": {
+    "A": {
+      "accuracy": {
+        "mean": 0.9175,
+        "std": 0.0008
+      },
+      "precision": {
+        "mean": 0.9176,
+        "std": 0.0009
+      },
+      "recall": {
+        "mean": 0.9175,
+        "std": 0.0008
+      },
+      "f1": {
+        "mean": 0.9172,
+        "std": 0.0007
+      },
+      "ece": {
+        "mean": 0.0306,
+        "std": 0.003
+      },
+      "mean_entropy": {
+        "mean": 0.1805,
+        "std": 0.0042
+      }
+    },
+    "B": {
+      "accuracy": {
+        "mean": 0.9158,
+        "std": 0.0013
+      },
+      "precision": {
+        "mean": 0.9157,
+        "std": 0.0012
+      },
+      "recall": {
+        "mean": 0.9158,
+        "std": 0.0013
+      },
+      "f1": {
+        "mean": 0.9156,
+        "std": 0.0011
+      },
+      "ece": {
+        "mean": 0.045,
+        "std": 0.0016
+      },
+      "mean_entropy": {
+        "mean": 0.1535,
+        "std": 0.0048
+      }
+    },
+    "C": {
+      "accuracy": {
+        "mean": 0.9166,
+        "std": 0.0022
+      },
+      "precision": {
+        "mean": 0.9173,
+        "std": 0.0018
+      },
+      "recall": {
+        "mean": 0.9166,
+        "std": 0.0022
+      },
+      "f1": {
+        "mean": 0.9167,
+        "std": 0.0021
+      },
+      "ece": {
+        "mean": 0.0515,
+        "std": 0.0029
+      },
+      "mean_entropy": {
+        "mean": 0.1386,
+        "std": 0.0016
+      }
+    },
+    "D": {
+      "accuracy": {
+        "mean": 0.9157,
+        "std": 0.001
+      },
+      "precision": {
+        "mean": 0.9158,
+        "std": 0.0009
+      },
+      "recall": {
+        "mean": 0.9157,
+        "std": 0.001
+      },
+      "f1": {
+        "mean": 0.9156,
+        "std": 0.0008
+      },
+      "ece": {
+        "mean": 0.0435,
+        "std": 0.0013
+      },
+      "mean_entropy": {
+        "mean": 0.1587,
+        "std": 0.0036
+      }
+    }
+  }
+}

@@ -1,0 +1,116 @@
+======================================================================
+  AKRM DIAGNOSIS VALIDATION REPORT
+  Purpose: Verify that the knowledge gap diagnosis reflects
+  genuine model behaviour (not random classification).
+======================================================================
+
+  Total uncertain samples analysed : 4,500
+
+----------------------------------------------------------------------
+  1. KNOWLEDGE GAP DISTRIBUTION
+----------------------------------------------------------------------
+  Decision Boundary Confusion           840  ( 18.7%)
+  Low Intra-class Diversity            1198  ( 26.6%)
+  General Uncertainty                  2462  ( 54.7%)
+
+----------------------------------------------------------------------
+  2. MEAN ENTROPY PER GAP TYPE
+----------------------------------------------------------------------
+  Decision Boundary Confusion         mean=1.1426  std=0.2301  min=0.7691  max=2.0697
+  Low Intra-class Diversity           mean=0.9540  std=0.1528  min=0.7689  max=1.7123
+  General Uncertainty                 mean=0.9962  std=0.1826  min=0.7688  max=1.7736
+  (Expected: DECISION_BOUNDARY_CONFUSION > LOW_DIVERSITY > GENERAL)
+
+----------------------------------------------------------------------
+  3. TOP CONFUSION PAIRS  (Decision Boundary Confusion only)
+----------------------------------------------------------------------
+  Cat             vs Dog             :   83  (  9.9%)
+  Dog             vs Dog             :   50  (  6.0%)
+  Bird            vs Bird            :   48  (  5.7%)
+  Bird            vs Deer            :   47  (  5.6%)
+  Cat             vs Frog            :   42  (  5.0%)
+  Bird            vs Frog            :   41  (  4.9%)
+  Cat             vs Cat             :   37  (  4.4%)
+  Horse           vs Horse           :   31  (  3.7%)
+  Bird            vs Dog             :   28  (  3.3%)
+  Deer            vs Horse           :   26  (  3.1%)
+
+----------------------------------------------------------------------
+  4. EXAMPLE REASONING RECORDS (up to 3 per gap type)
+----------------------------------------------------------------------
+
+  [Decision Boundary Confusion]
+    Sample  26048  True: Frog             Pred: Deer           
+    Entropy: 0.7691  Margin: 0.0042  Correct: False
+    Explanation: High entropy (0.769) with low decision margin (0.004). The model confuses 'Frog' with 'Frog' (p=0.491). The model's deci...
+    Objective  : increase_class_separation
+    Strategy   : COUNTEREXAMPLE
+    Experiences: 8
+
+    Sample  39152  True: Bird             Pred: Bird           
+    Entropy: 0.7695  Margin: 0.0664  Correct: True
+    Explanation: High entropy (0.770) with low decision margin (0.066). The model confuses 'Bird' with 'Deer' (p=0.458). The model's deci...
+    Objective  : increase_class_separation
+    Strategy   : COUNTEREXAMPLE
+    Experiences: 8
+
+    Sample   4353  True: Cat              Pred: Cat            
+    Entropy: 0.7702  Margin: 0.1427  Correct: True
+    Explanation: High entropy (0.770) with low decision margin (0.143). The model confuses 'Cat' with 'Deer' (p=0.420). The model's decis...
+    Objective  : increase_class_separation
+    Strategy   : COUNTEREXAMPLE
+    Experiences: 8
+
+
+  [Low Intra-class Diversity]
+    Sample   4021  True: Horse            Pred: Horse          
+    Entropy: 0.7689  Margin: 0.5528  Correct: True
+    Explanation: Medium entropy (0.769) with sparse feature-space neighbourhood for 'Horse' (density_dist=20.563 > threshold 20.299). Thi...
+    Objective  : increase_intra_class_diversity
+    Strategy   : RETRIEVAL
+    Experiences: 8
+
+    Sample  16554  True: Dog              Pred: Dog            
+    Entropy: 0.7689  Margin: 0.7388  Correct: True
+    Explanation: Medium entropy (0.769) with sparse feature-space neighbourhood for 'Dog' (density_dist=25.839 > threshold 20.299). This ...
+    Objective  : increase_intra_class_diversity
+    Strategy   : RETRIEVAL
+    Experiences: 8
+
+    Sample   4370  True: Airplane         Pred: Airplane       
+    Entropy: 0.7692  Margin: 0.5018  Correct: True
+    Explanation: Medium entropy (0.769) with sparse feature-space neighbourhood for 'Airplane' (density_dist=23.008 > threshold 20.299). ...
+    Objective  : increase_intra_class_diversity
+    Strategy   : RETRIEVAL
+    Experiences: 8
+
+
+  [General Uncertainty]
+    Sample  40194  True: Deer             Pred: Deer           
+    Entropy: 0.7688  Margin: 0.7687  Correct: True
+    Explanation: Moderate uncertainty (0.769). Prediction was correct (predicted 'Deer', true 'Deer'). No specific structural gap identif...
+    Objective  : strengthen_concept_representation
+    Strategy   : RETRIEVAL
+    Experiences: 8
+
+    Sample  37233  True: Deer             Pred: Deer           
+    Entropy: 0.7689  Margin: 0.6839  Correct: True
+    Explanation: Moderate uncertainty (0.769). Prediction was correct (predicted 'Deer', true 'Deer'). No specific structural gap identif...
+    Objective  : strengthen_concept_representation
+    Strategy   : RETRIEVAL
+    Experiences: 8
+
+    Sample  11907  True: Bird             Pred: Bird           
+    Entropy: 0.7691  Margin: 0.4686  Correct: True
+    Explanation: Moderate uncertainty (0.769). Prediction was correct (predicted 'Bird', true 'Bird'). No specific structural gap identif...
+    Objective  : strengthen_concept_representation
+    Strategy   : RETRIEVAL
+    Experiences: 8
+
+----------------------------------------------------------------------
+  5. STRATEGY BREAKDOWN
+----------------------------------------------------------------------
+  RETRIEVAL             3660  ( 81.3%)
+  COUNTEREXAMPLE         840  ( 18.7%)
+
+======================================================================

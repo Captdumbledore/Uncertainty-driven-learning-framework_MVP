@@ -1,0 +1,41 @@
+================================================================
+  PRE-RETRAINING UNCERTAINTY ANALYSIS REPORT
+================================================================
+
+  Total training samples              : 54,000
+  MC-Dropout accuracy on train set    : 97.63%
+  Top-10% uncertain samples selected : 5,400
+
+  ────────────────────────────────────────────────────────────
+  Q1  Are the most uncertain samples actually misclassified?
+  ────────────────────────────────────────────────────────────
+      % misclassified (among top uncertain)     : 20.33%
+      % correctly classified (yet still uncertain): 79.67%
+
+  ────────────────────────────────────────────────────────────
+  Q2  Which classes appear most among uncertain samples?
+  ────────────────────────────────────────────────────────────
+      Shirt                     1599  ( 29.6%)
+      T-shirt/top               1107  ( 20.5%)
+      Pullover                   989  ( 18.3%)
+      Coat                       673  ( 12.5%)
+      Dress                      519  (  9.6%)
+      Sneaker                    218  (  4.0%)
+      Ankle boot                 106  (  2.0%)
+      Sandal                      75  (  1.4%)
+      Bag                         63  (  1.2%)
+      Trouser                     51  (  0.9%)
+
+  ────────────────────────────────────────────────────────────
+  Q3  Correlation: predictive entropy ↔ prediction error
+  ────────────────────────────────────────────────────────────
+      Pearson r(entropy, error) = 0.3941
+      Interpretation: Positive — entropy is a meaningful signal for prediction errors.
+
+  ────────────────────────────────────────────────────────────
+  Q4  Entropy statistics by prediction correctness
+  ────────────────────────────────────────────────────────────
+      Mean entropy | correct predictions   : 0.1295  (n=52,718)
+      Mean entropy | incorrect predictions : 0.7772  (n=1,282)
+
+================================================================

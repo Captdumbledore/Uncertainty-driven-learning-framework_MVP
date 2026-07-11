@@ -1,0 +1,116 @@
+======================================================================
+  AKRM DIAGNOSIS VALIDATION REPORT
+  Purpose: Verify that the knowledge gap diagnosis reflects
+  genuine model behaviour (not random classification).
+======================================================================
+
+  Total uncertain samples analysed : 5,400
+
+----------------------------------------------------------------------
+  1. KNOWLEDGE GAP DISTRIBUTION
+----------------------------------------------------------------------
+  Decision Boundary Confusion          1435  ( 26.6%)
+  Low Intra-class Diversity            1383  ( 25.6%)
+  General Uncertainty                  2582  ( 47.8%)
+
+----------------------------------------------------------------------
+  2. MEAN ENTROPY PER GAP TYPE
+----------------------------------------------------------------------
+  Decision Boundary Confusion         mean=0.8731  std=0.1978  min=0.6736  max=1.7573
+  Low Intra-class Diversity           mean=0.7881  std=0.1809  min=0.5855  max=1.7070
+  General Uncertainty                 mean=0.7509  std=0.1486  min=0.5855  max=1.7302
+  (Expected: DECISION_BOUNDARY_CONFUSION > LOW_DIVERSITY > GENERAL)
+
+----------------------------------------------------------------------
+  3. TOP CONFUSION PAIRS  (Decision Boundary Confusion only)
+----------------------------------------------------------------------
+  Shirt           vs T-shirt/top     :  262  ( 18.3%)
+  Shirt           vs Shirt           :  164  ( 11.4%)
+  Coat            vs Coat            :  149  ( 10.4%)
+  Pullover        vs Shirt           :  141  (  9.8%)
+  Coat            vs Shirt           :  129  (  9.0%)
+  Coat            vs Pullover        :  101  (  7.0%)
+  T-shirt/top     vs T-shirt/top     :   95  (  6.6%)
+  Pullover        vs Pullover        :   78  (  5.4%)
+  Coat            vs Dress           :   51  (  3.6%)
+  Ankle boot      vs Sneaker         :   48  (  3.3%)
+
+----------------------------------------------------------------------
+  4. EXAMPLE REASONING RECORDS (up to 3 per gap type)
+----------------------------------------------------------------------
+
+  [Decision Boundary Confusion]
+    Sample  37150  True: Sneaker          Pred: Ankle boot     
+    Entropy: 0.6736  Margin: 0.1980  Correct: False
+    Explanation: High entropy (0.674) with low decision margin (0.198). The model confuses 'Sneaker' with 'Sneaker' (p=0.401). The model'...
+    Objective  : increase_class_separation
+    Strategy   : COUNTEREXAMPLE
+    Experiences: 8
+
+    Sample  18475  True: T-shirt/top      Pred: Shirt          
+    Entropy: 0.6737  Margin: 0.1988  Correct: False
+    Explanation: High entropy (0.674) with low decision margin (0.199). The model confuses 'T-shirt/top' with 'T-shirt/top' (p=0.401). Th...
+    Objective  : increase_class_separation
+    Strategy   : COUNTEREXAMPLE
+    Experiences: 8
+
+    Sample  11737  True: T-shirt/top      Pred: T-shirt/top    
+    Entropy: 0.6739  Margin: 0.1977  Correct: True
+    Explanation: High entropy (0.674) with low decision margin (0.198). The model confuses 'T-shirt/top' with 'Shirt' (p=0.401). The mode...
+    Objective  : increase_class_separation
+    Strategy   : COUNTEREXAMPLE
+    Experiences: 8
+
+
+  [Low Intra-class Diversity]
+    Sample  19353  True: T-shirt/top      Pred: T-shirt/top    
+    Entropy: 0.5855  Margin: 0.4728  Correct: True
+    Explanation: Medium entropy (0.585) with sparse feature-space neighbourhood for 'T-shirt/top' (density_dist=9.514 > threshold 9.181)....
+    Objective  : increase_intra_class_diversity
+    Strategy   : RETRIEVAL
+    Experiences: 8
+
+    Sample  35441  True: T-shirt/top      Pred: T-shirt/top    
+    Entropy: 0.5857  Margin: 0.4562  Correct: True
+    Explanation: Medium entropy (0.586) with sparse feature-space neighbourhood for 'T-shirt/top' (density_dist=9.860 > threshold 9.181)....
+    Objective  : increase_intra_class_diversity
+    Strategy   : RETRIEVAL
+    Experiences: 8
+
+    Sample  47111  True: Trouser          Pred: Trouser        
+    Entropy: 0.5857  Margin: 0.6041  Correct: True
+    Explanation: Medium entropy (0.586) with sparse feature-space neighbourhood for 'Trouser' (density_dist=9.982 > threshold 9.181). Thi...
+    Objective  : increase_intra_class_diversity
+    Strategy   : RETRIEVAL
+    Experiences: 8
+
+
+  [General Uncertainty]
+    Sample  13587  True: Coat             Pred: Coat           
+    Entropy: 0.5855  Margin: 0.5701  Correct: True
+    Explanation: Moderate uncertainty (0.585). Prediction was correct (predicted 'Coat', true 'Coat'). No specific structural gap identif...
+    Objective  : strengthen_concept_representation
+    Strategy   : RETRIEVAL
+    Experiences: 8
+
+    Sample  49580  True: T-shirt/top      Pred: T-shirt/top    
+    Entropy: 0.5855  Margin: 0.6169  Correct: True
+    Explanation: Moderate uncertainty (0.586). Prediction was correct (predicted 'T-shirt/top', true 'T-shirt/top'). No specific structur...
+    Objective  : strengthen_concept_representation
+    Strategy   : RETRIEVAL
+    Experiences: 8
+
+    Sample  44997  True: Pullover         Pred: Pullover       
+    Entropy: 0.5855  Margin: 0.5671  Correct: True
+    Explanation: Moderate uncertainty (0.586). Prediction was correct (predicted 'Pullover', true 'Pullover'). No specific structural gap...
+    Objective  : strengthen_concept_representation
+    Strategy   : RETRIEVAL
+    Experiences: 8
+
+----------------------------------------------------------------------
+  5. STRATEGY BREAKDOWN
+----------------------------------------------------------------------
+  RETRIEVAL             3965  ( 73.4%)
+  COUNTEREXAMPLE        1435  ( 26.6%)
+
+======================================================================

@@ -1,0 +1,81 @@
+==========================================================================
+  UNCERTAINTY-GUIDED RETRAINING — FINAL RESULTS SUMMARY
+==========================================================================
+
+  Dataset            : FashionMNIST
+  Initial epochs     : 15
+  Retraining epochs  : 8
+  MC Dropout passes  : 30
+  Top fraction       : 10%
+  Seeds              : [42, 123, 999]
+
+  Research Question:
+  Can prediction uncertainty be interpreted as knowledge gaps and
+  converted into targeted learning experiences (AKRM) that improve
+  neural network learning better than conventional uncertainty-guided
+  augmentation?
+
+  Hypothesis (H1):
+  Introducing a knowledge gap reasoning layer between uncertainty
+  estimation and retraining (AKRM — Pipeline C) produces measurably
+  better generalisation than both the baseline (A) and random
+  augmentation (B) under identical experimental conditions.
+
+──────────────────────────────────────────────────────────────────────────
+  METRIC TABLE  (Mean ± Std across 3 seeds — test set)
+──────────────────────────────────────────────────────────────────────────
+  Metric                            Pipeline A            Pipeline B            Pipeline C            Pipeline D
+  ──────────────────────────────────────────────────────────────────────
+  Accuracy                0.9175 ± 0.0008      0.9158 ± 0.0013      0.9166 ± 0.0022      0.9157 ± 0.0010    
+  Precision               0.9176 ± 0.0009      0.9157 ± 0.0012      0.9173 ± 0.0018      0.9158 ± 0.0009    
+  Recall                  0.9175 ± 0.0008      0.9158 ± 0.0013      0.9166 ± 0.0022      0.9157 ± 0.0010    
+  F1-Score                0.9172 ± 0.0007      0.9156 ± 0.0011      0.9167 ± 0.0021      0.9156 ± 0.0008    
+  Mean Entropy (↓)        0.1805 ± 0.0042      0.1535 ± 0.0048      0.1386 ± 0.0016      0.1587 ± 0.0036    
+  ECE (↓)                 0.0306 ± 0.0030      0.0450 ± 0.0016      0.0515 ± 0.0029      0.0435 ± 0.0013    
+
+──────────────────────────────────────────────────────────────────────────
+  CORRECTED MISCLASSIFICATIONS  (vs Pipeline A, representative seed)
+──────────────────────────────────────────────────────────────────────────
+  Pipeline B — Random Aug        + 229 corrected   - 244 regressed   net -15
+  Pipeline C - AKRM                + 219 corrected   - 228 regressed   net -9
+  Pipeline D — Least Uncertain   + 205 corrected   - 233 regressed   net -28
+
+──────────────────────────────────────────────────────────────────────────
+  HYPOTHESIS VERDICT
+──────────────────────────────────────────────────────────────────────────
+  H1 NOT SUPPORTED
+
+  Pipeline C does not outperform the baseline or random selection.
+
+  Honest analysis — candidate reasons:
+   1. Dataset ceiling: Fashion-MNIST is a relatively simple benchmark.
+      The baseline CNN already captures most useful patterns, leaving
+      little room for targeted augmentation to further improve.
+   2. Augmentation intensity: the mild augmentations (±15° rotation,
+      ±2 px translation, ±20% brightness, σ=0.05 noise) may not
+      introduce sufficient novel information for the model to learn.
+   3. Dropout-based uncertainty on a small model may not reliably
+      identify the most informative samples for this task.
+   4. Retraining epochs may be insufficient to exploit the augmented
+      data before the optimiser converges.
+
+  Recommendations for future work:
+   · Switch to Fashion-MNIST → CIFAR-10 or a noisily-labelled dataset
+     where boundary uncertainty is more pronounced.
+   · Increase augmentation diversity (e.g., cutout, mixup).
+   · Extend retraining epochs or lower the retraining LR.
+   · Try a more expressive uncertainty method (e.g., deep ensembles).
+
+──────────────────────────────────────────────────────────────────────────
+  ACCURACY SUMMARY
+──────────────────────────────────────────────────────────────────────────
+  Pipeline A (Baseline)          : 0.9175
+  Pipeline B (Random Aug)        : 0.9158
+  Pipeline C (AKRM)              : 0.9166
+  Pipeline D (Least Uncertain)   : 0.9157
+
+  C − A  (vs baseline)       : -0.0010
+  C − B  (vs random)         : +0.0008
+  C − D  (vs least uncertain): +0.0009
+
+==========================================================================
