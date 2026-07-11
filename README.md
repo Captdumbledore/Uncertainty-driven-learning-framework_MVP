@@ -1,6 +1,8 @@
 # Uncertainty-Driven Learning Framework
 **Adaptive Knowledge Reasoning Module (AKRM)**
 
+*AKRM is an uncertainty-driven learning framework that diagnoses model knowledge gaps and selects targeted learning experiences before updating the neural network.*
+
 ---
 
 ## Overview
@@ -72,7 +74,7 @@ The following summarizes the current MVP validation on **CIFAR-10** (averaged ac
 | **AKRM (C)** | **0.7334 ± 0.0037** | **0.7341 ± 0.0039** | **0.1515 ± 0.0097** | **0.4332 ± 0.0183** |
 | **Least-Uncertain (D)** | 0.7186 ± 0.0033 | 0.7186 ± 0.0026 | 0.1899 ± 0.0029 | 0.4541 ± 0.0095 |
 
-*Key Finding: Blindly augmenting uncertain samples (Pipeline B) causes catastrophic forgetting (lower accuracy than baseline). AKRM paired with Knowledge Distillation preserves foundational knowledge while absorbing complex edge cases, successfully outperforming all controls.*
+*Key Finding: Blindly augmenting uncertain samples (Pipeline B) causes catastrophic forgetting (lower accuracy than baseline). In the evaluated CIFAR-10 experiments, AKRM combined with Knowledge Distillation achieved the highest performance among the implemented pipelines, suggesting improved integration of uncertainty-guided learning experiences while reducing the performance degradation observed with conventional retraining.*
 
 ---
 
@@ -81,7 +83,7 @@ The following summarizes the current MVP validation on **CIFAR-10** (averaged ac
 - **Stage 1 (Architecture Construction):** Built the core 5-stage AKRM reasoning pipeline, data loaders, baseline model, and orchestration framework.
 - **Stage 2 (Experimental Validation):** Evaluated five learning protocols on CIFAR-10. Identified catastrophic forgetting in standard retraining methods and proved that Knowledge Distillation solves it.
 - **Experiment 1 (Fashion-MNIST):** Initially saturated the dataset ceiling, revealing the necessity for complex decision boundaries to evaluate reasoning.
-- **Experiment 2 (CIFAR-10):** Successfully validated the core hypothesis (H1). AKRM measurably outperforms conventional uncertainty-guided augmentation.
+- **Experiment 2 (CIFAR-10):** Successfully validated the core experimental hypothesis (H1) on the CIFAR-10 MVP benchmark. Under the evaluated setting, AKRM outperformed the implemented uncertainty-guided augmentation baselines.
 
 This repository contains the completed, fully-audited **MVP implementation** of the research framework.
 
