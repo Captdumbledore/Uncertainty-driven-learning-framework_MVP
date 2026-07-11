@@ -78,7 +78,7 @@ def augment_samples(
             noise = torch.tensor(
                 np_rng.normal(0.0, 0.05, img.shape), dtype=torch.float32
             )
-            img = torch.clamp(img + noise, 0.0, 1.0)
+            img = img + noise
 
             aug_images.append(img)
             aug_labels.append(int(label))

@@ -256,6 +256,8 @@ def run_single_seed(seed: int, args, class_names: list, device) -> tuple:
 
     # ── Phases 4 & 5: Retrain Pipelines B, C, D ──────────────────────────
     for pipeline in ["B", "C", "D"]:
+        # Reset RNG state to guarantee identical shuffling and dropout sequences
+        set_seed(seed)
 
         if pipeline == "C":
             # ── Pipeline C: AKRM ─────────────────────────────────────────
