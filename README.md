@@ -120,7 +120,7 @@ If you find this repository useful for your academic research or use it as a bas
 
 ```bibtex
 @misc{akrm2026,
-  author = {Shishya and Ardhra and Shifna and Jisto},
+  author = {Jisto},
   title = {Uncertainty-Driven Learning Framework: Adaptive Knowledge Reasoning for Targeted Neural Networks},
   year = {2026},
   publisher = {GitHub},
