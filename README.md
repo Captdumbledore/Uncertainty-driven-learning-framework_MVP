@@ -111,3 +111,19 @@ Future work includes:
 - Improved planners with dynamic weighting
 - Continual learning extensions
 - Larger-scale architecture evaluation (ResNet/ViT)
+
+---
+
+## Citation
+
+If you find this repository useful for your academic research or use it as a baseline in your experiments, please cite this project and acknowledge the original authors:
+
+```bibtex
+@misc{akrm2026,
+  author = {Shishya and Ardhra and Shifna and Jisto},
+  title = {Uncertainty-Driven Learning Framework: Adaptive Knowledge Reasoning for Targeted Neural Networks},
+  year = {2026},
+  publisher = {GitHub},
+  howpublished = {\url{https://github.com/Captdumbledore/Uncertainty-driven-learning-framework_MVP}}
+}
+```
